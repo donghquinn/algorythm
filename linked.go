@@ -49,3 +49,43 @@ func (link *LinkedList) IndexOf(i int) *Node {
 	}
 	return node
 }
+
+// 갱신
+func (link *LinkedList) InsertFirst(node *Node) {
+	if link.Header == nil {
+		link.Header = node
+		link.Tail = node
+	} else {
+		node.Next = link.Header
+		link.Header = node
+	}
+
+	link.Count++
+}
+
+func (link *LinkedList) InsertLast(node *Node) {
+	if link.Tail == nil {
+		link.Header = node
+		link.Tail = node
+	} else {
+		node.Next = link.Header
+		link.Header = node
+	}
+
+	link.Count++
+}
+
+func (link *LinkedList) InsertMiddle(node *Node, prevNode *Node) bool {
+	if prevNode == nil {
+		return false
+	} else {
+		node.Next = prevNode.Next
+		prevNode.Next = node
+		if link.Tail == prevNode {
+			link.Tail = node
+		}
+
+		link.Count++
+		return true
+	}
+}
