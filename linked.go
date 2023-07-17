@@ -1,6 +1,9 @@
 package linked
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 type LinkedList struct {
 	Header *Node
@@ -92,6 +95,7 @@ func (link *LinkedList) InsertMiddle(node *Node, prevNode *Node) bool {
 
 // 삭제
 func (link *LinkedList) RemoveFirst() {
+	// 리스트에 노드가 있는지 확인한다.
 	if link.Tail == nil {
 		return
 	} else if link.Tail == link.Header {
@@ -104,6 +108,7 @@ func (link *LinkedList) RemoveFirst() {
 }
 
 func (link *LinkedList) RemoveLast() {
+	// 리스트에 노드가 있는지 확인한다.
 	if link.Tail == nil {
 		return
 	}
@@ -156,4 +161,19 @@ func (link *LinkedList) RemoveNode(node *Node) bool {
 	}
 
 	return isRemove
+}
+
+func (link LinkedList) String() string {
+	str := "["
+	if n := link.Header; n == nil {
+		str += "]"
+		return str
+	} else {
+		for n != nil {
+			str += fmt.Sprintf("%+v, ", n.Value)
+			n = n.Next
+		}
+		str += "]"
+		return str
+	}
 }
