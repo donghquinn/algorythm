@@ -89,3 +89,71 @@ func (link *LinkedList) InsertMiddle(node *Node, prevNode *Node) bool {
 		return true
 	}
 }
+
+// 삭제
+func (link *LinkedList) RemoveFirst() {
+	if link.Tail == nil {
+		return
+	} else if link.Tail == link.Header {
+		link.Tail = nil
+		link.Header = nil
+	} else {
+		link.Header = link.Header.Next
+	}
+	link.Count--
+}
+
+func (link *LinkedList) RemoveLast() {
+	if link.Tail == nil {
+		return
+	}
+
+	if link.Tail == link.Header {
+		link.Tail = nil
+		link.Header = nil
+	} else {
+		for n := link.Header; n != nil; {
+			if n.Next == link.Tail {
+				n.Next = nil
+				link.Tail = n
+			}
+			n = n.Next
+		}
+	}
+	link.Count--
+}
+
+func (link *LinkedList) RemoveNode(node *Node) bool {
+	if node == nil {
+		return false
+	}
+
+	isRemove := false
+
+	if link.Tail == link.Header {
+		link.Count--
+		link.Tail = nil
+		link.Header = nil
+		isRemove = true
+	} else if link.Header == node {
+		link.Header = node.Next
+		isRemove = true
+	} else {
+		for n := link.Header; n != nil; {
+			if n.Next == node {
+				n.Next = node.Next
+				isRemove = true
+				if link.Tail == node {
+					link.Tail = n
+				}
+			}
+			n = n.Next
+		}
+	}
+
+	if isRemove {
+		link.Count--
+	}
+
+	return isRemove
+}
